@@ -1,0 +1,14 @@
+.Header {
+  width:100%;
+  padding:5px;
+  display: flex;
+  align-items: center;
+  gap:10px;
+}
+
+.Caption {
+  color: white;
+  font-size: large;
+  margin-top: 2px;
+}
+

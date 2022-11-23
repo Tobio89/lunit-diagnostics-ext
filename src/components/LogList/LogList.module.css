@@ -1,0 +1,9 @@
+.LogList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Log {
+  color:white;
+}
