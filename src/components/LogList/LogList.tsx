@@ -9,9 +9,15 @@ function LogList() {
 
   return (
     <div className={styles.LogList}>
-      <h2 className={styles.Project}>
-        Project: {activeProject && activeProject.toUpperCase()}
-      </h2>
+      {activeProject ? (
+        <h2 className={styles.Project}>
+          Project: {activeProject && activeProject.toUpperCase()}
+        </h2>
+      ) : (
+        <h2 className={styles.Project}>
+          Refresh SCOPE Demo to begin
+        </h2>
+      )}
       {metrics &&
         activeProject &&
         Object.entries(metrics).map(([scope, metrics]) => {
