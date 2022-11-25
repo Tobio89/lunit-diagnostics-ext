@@ -7,7 +7,7 @@
 - Toggle Developer Mode on
 - Select Load Unpacked, and navigate to the build directory
 - !important - copy the ID
-- Paste the ID into `export const diagnosticsExtID = 'dkikakahcdclhpjmajbkjefamjafahel';` in const/index.ts folder in the scope demo app
+- Paste the ID into `export const diagnosticsExtID = '';` in const/index.ts folder in the scope demo app
 
 ### Usage
 
