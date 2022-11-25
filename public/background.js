@@ -1,7 +1,6 @@
 /*global chrome */
-
-let logs = [];
 let metrics = undefined;
+let activeMetric = undefined;
 
 function parseConfig(config) {
   const result = {};
@@ -36,16 +35,24 @@ chrome.runtime.onMessageExternal.addListener(function (
       console.log("metrics not initialized");
       return;
     }
-    const { label, duration } = request.payload;
+    const { label, duration, extra } = request.payload;
     const result = {
-      recent: duration,
+      target: "recent",
+      value: duration,
     };
-    if (duration < metrics[label.project][label.scope].min) {
+    metrics[label.project][label.scope].recent = duration;
+    if (
+      metrics[label.project][label.scope].min === 0 ||
+      duration < metrics[label.project][label.scope].min
+    ) {
       metrics[label.project][label.scope].min = duration;
-      result.max = duration;
+      result.target = "min";
     } else if (duration > metrics[label.project][label.scope].max) {
-      metrics[label.project][label.scope].max = duration;
-      result.min = duration;
+      metrics[label.project][label.scope].min = duration;
+      result.target = "max";
+    }
+    if (activeMetric !== label.project) {
+      activeMetric = label.project;
     }
     chrome.runtime.sendMessage({
       msg: "update",
@@ -53,11 +60,15 @@ chrome.runtime.onMessageExternal.addListener(function (
         project: label.project,
         scope: label.scope,
         news: result,
+        extra,
       },
     });
   }
 });
 
 chrome.runtime.onMessage.addListener(function (_, __, sendResponse) {
-  sendResponse({ logs: logs });
+  if (!metrics || !activeMetric) {
+    sendResponse({ msg: "empty" });
+  }
+  sendResponse({ msg: "success", logs: metrics, activeMetric });
 });

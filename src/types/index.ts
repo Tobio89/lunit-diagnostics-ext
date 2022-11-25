@@ -15,6 +15,7 @@ export interface IndividualMetric {
   max:number
   min:number
   recent:number
+  extra?:any
 }
 
 export interface Metrics {

@@ -11,7 +11,7 @@ function LogList(){
 
   return (
     <div className={styles.LogList}>
-      <div>{activeMetric && activeMetric}</div>
+      <h2 className={styles.Project}>Project: {activeMetric && activeMetric.toUpperCase()}</h2>
       {metrics && activeMetric &&  Object.entries(metrics).map(([scope, metrics])=>{
           return <MetricsLog scope={scope} metrics={metrics} />
         })

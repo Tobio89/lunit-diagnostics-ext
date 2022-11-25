@@ -1,3 +1,24 @@
 .MetricsLog {
   color:white;
+  padding-bottom:10px;
+}
+
+.Scope {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+
+.MetricTable {
+  width: 100%;
+  padding-left: 5px;
+}
+
+.Metric {
+  display: flex;
+  padding-top: 1px;
+}
+
+.Key {
+  font-weight: bold;
+  width: 40px;
 }
