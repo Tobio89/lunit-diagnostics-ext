@@ -7,7 +7,7 @@ import { Metrics, IndividualMetric } from "../types";
 function useLogs() {
 
   const [metrics, setMetrics] = useState<Metrics| undefined>(undefined)
-  const [activeMetric, setActiveMetric] = useState<string|undefined>(undefined)
+  const [activeProject, setActiveProject] = useState<string|undefined>(undefined)
   const [justLoaded, setJustLoaded] = useState<boolean>(true)
 
   chrome.runtime.onMessage.addListener(
@@ -18,7 +18,7 @@ function useLogs() {
       } else if (request.msg === 'update'){
         if (!metrics) return
         const {project, scope, news, extra}= request.payload as {project:string, scope:string, news:{target:string, value:number }, extra?:any}
-        if (project !== activeMetric) setActiveMetric(project)
+        if (project !== activeProject) setActiveProject(project)
         const newVals = {...metrics[project][scope]}
         if (news.target !== 'recent'){
           newVals[news.target as keyof IndividualMetric] = news.value
@@ -41,15 +41,15 @@ function useLogs() {
     } else {
       console.log('request.logs', request.logs)
       setMetrics(request.logs)
-      setActiveMetric(request.activeMetric)
+      setActiveProject(request.activeProject)
       setJustLoaded(false)
     }
   })
  }
 
   return {
-    metrics: !!activeMetric ? metrics?.[activeMetric] : undefined,
-    activeMetric
+    metrics: !!activeProject ? metrics?.[activeProject] : undefined,
+    activeProject
   };
 }
 export default useLogs

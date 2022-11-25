@@ -1,6 +1,7 @@
 /*global chrome */
 let metrics = undefined;
-let activeMetric = undefined;
+let activeProject = undefined;
+let activeScope = undefined;
 
 function parseConfig(config) {
   const result = {};
@@ -19,12 +20,8 @@ function parseConfig(config) {
   return result;
 }
 
-chrome.runtime.onMessageExternal.addListener(function (
-  request,
-  _,
-  sendResponse
-) {
-  if (request.msg === "initialise structure") {
+chrome.runtime.onMessageExternal.addListener(function (request) {
+  if (request.msg === "initialise structure" && !metrics) {
     metrics = parseConfig(request.payload);
     chrome.runtime.sendMessage({
       msg: "initialise metrics",
@@ -48,11 +45,11 @@ chrome.runtime.onMessageExternal.addListener(function (
       metrics[label.project][label.scope].min = duration;
       result.target = "min";
     } else if (duration > metrics[label.project][label.scope].max) {
-      metrics[label.project][label.scope].min = duration;
+      metrics[label.project][label.scope].max = duration;
       result.target = "max";
     }
-    if (activeMetric !== label.project) {
-      activeMetric = label.project;
+    if (activeProject !== label.project) {
+      activeProject = label.project;
     }
     chrome.runtime.sendMessage({
       msg: "update",
@@ -67,8 +64,8 @@ chrome.runtime.onMessageExternal.addListener(function (
 });
 
 chrome.runtime.onMessage.addListener(function (_, __, sendResponse) {
-  if (!metrics || !activeMetric) {
+  if (!metrics || !activeProject) {
     sendResponse({ msg: "empty" });
   }
-  sendResponse({ msg: "success", logs: metrics, activeMetric });
+  sendResponse({ msg: "success", logs: metrics, activeProject });
 });

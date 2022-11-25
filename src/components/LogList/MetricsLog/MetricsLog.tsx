@@ -15,17 +15,17 @@ function MetricsLog({ scope, metrics }: Props) {
       <div className={styles.MetricTable}>
         <div className={styles.Metric}>
           <span className={styles.Key}>last: </span>
-          <span className={styles.Val}>{recent}</span>
+          <span className={styles.Val}>{recent} ms</span>
         </div>
         <div className={styles.Metric}>
           <span className={styles.Key}> max: </span>
-          <span className={styles.Val}>{max}</span>
+          <span className={styles.Val}>{max} ms</span>
         </div>
         <div className={styles.Metric}>
           <span className={styles.Key}> min: </span>
-          <span className={styles.Val}>{min}</span>
+          <span className={styles.Val}>{min} ms</span>
         </div>
-        {extra && (
+        {scope === "cellDetection" && (
           <div className={styles.Metric}>
             <span className={styles.Key}> cells: </span>
             <span className={styles.Val}>{extra}</span>

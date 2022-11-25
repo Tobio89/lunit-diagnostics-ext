@@ -4,21 +4,21 @@ import useLogs from "../../hooks/useLogs";
 
 import styles from "./LogList.module.css";
 
-function LogList(){
-
-  const {metrics, activeMetric} = useLogs()
-
+function LogList() {
+  const { metrics, activeProject } = useLogs();
 
   return (
     <div className={styles.LogList}>
-      <h2 className={styles.Project}>Project: {activeMetric && activeMetric.toUpperCase()}</h2>
-      {metrics && activeMetric &&  Object.entries(metrics).map(([scope, metrics])=>{
-          return <MetricsLog scope={scope} metrics={metrics} />
-        })
-      }
+      <h2 className={styles.Project}>
+        Project: {activeProject && activeProject.toUpperCase()}
+      </h2>
+      {metrics &&
+        activeProject &&
+        Object.entries(metrics).map(([scope, metrics]) => {
+          return <MetricsLog scope={scope} metrics={metrics} />;
+        })}
     </div>
   );
-
 }
 
 export default LogList;
