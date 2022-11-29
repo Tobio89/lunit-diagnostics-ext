@@ -25,7 +25,7 @@ function MetricsLog({ scope, metrics }: Props) {
           <span className={styles.Key}> min: </span>
           <span className={styles.Val}>{min} ms</span>
         </div>
-        {scope === "cellDetection" && (
+        {scope.toLowerCase().includes('cell') && (
           <div className={styles.Metric}>
             <span className={styles.Key}> cells: </span>
             <span className={styles.Val}>{extra}</span>

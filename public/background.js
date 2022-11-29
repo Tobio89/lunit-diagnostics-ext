@@ -21,8 +21,9 @@ function parseConfig(config) {
 }
 
 chrome.runtime.onMessageExternal.addListener(function (request) {
-  if (request.msg === "initialise structure" && !metrics) {
+  if (request.msg === "initialise structure") {
     metrics = parseConfig(request.payload);
+    console.log("metrics", metrics);
     chrome.runtime.sendMessage({
       msg: "initialise metrics",
       payload: metrics,
